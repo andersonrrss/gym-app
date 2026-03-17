@@ -1,0 +1,54 @@
+[
+  {
+    "Id": "1d1e3e9b-b392-4fe7-85f0-a3e709408b3c",
+    "Name": "Peitoral"
+  },
+  {
+    "Id": "f8f48454-d0ef-4bcf-a75b-5be98be1b838",
+    "Name": "Bíceps"
+  },
+  {
+    "Id": "9c4260d8-b1d6-4fd9-8dd4-b3ecae2f3dc7",
+    "Name": "Tríceps"
+  },
+  {
+    "Id": "bd5b2d35-2696-4777-a49e-88ccdff78295",
+    "Name": "Dorsal"
+  },
+  {
+    "Id": "ea069203-b519-4629-bee7-e7a07ad1f1b4",
+    "Name": "Abdômen"
+  },
+  {
+    "Id": "8ce690bc-16ca-42aa-9d7e-bfab034a0d45",
+    "Name": "Quadríceps"
+  },
+  {
+    "Id": "7d83b8be-8106-44c7-b757-21229c45a514",
+    "Name": "Posterior de Coxa"
+  },
+  {
+    "Id": "4911e664-f75b-4f2a-92e0-6bbc9fcc6dec",
+    "Name": "Glúteo"
+  },
+  {
+    "Id": "78900b9b-e79a-47e0-8e6f-dd27da979fc9",
+    "Name": "Lombar"
+  },
+  {
+    "Id": "c5fe59fb-e679-429a-ba23-57f4038675f4",
+    "Name": "Antebraço"
+  },
+  {
+    "Id": "4e69d837-ae32-4272-9908-341963a08314",
+    "Name": "Ombro"
+  },
+  {
+    "Id": "51f00ebd-b28e-420c-a999-6f488a90362b",
+    "Name": "Panturrilha"
+  },
+  {
+    "Id": "84d2a33c-3ff2-4698-85eb-860e0eeb1ee3",
+    "Name": "Trapézio"
+  }
+]
