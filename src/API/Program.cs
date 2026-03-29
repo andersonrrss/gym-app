@@ -1,11 +1,42 @@
 using Microsoft.OpenApi;
-using GymApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
+using GymApp.API.Extensions;
+
+using GymApp.Application.Interfaces;
+using GymApp.Application.Services;
+
+using GymApp.Infrastructure.Data;
+using GymApp.Infrastructure.Repositories;
+using GymApp.Infrastructure.Services;
+using GymApp.Application.Settings;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// Serviços
+builder.Services.AddSingleton<IHashPasswordService, HashPasswordService>();
+builder.Services.AddScoped<IAuthService, AuthService>(); 
+
+// Repositórios
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+// Jwt
+builder.Services.AddSingleton<IJwtService, JwtService>();
+
+var jwtSection = builder.Configuration.GetSection("Jwt");
+builder.Services.AddOptions<JwtSettings>()
+    .BindConfiguration("Jwt")
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddJwtAuthentication(jwtSection.Get<JwtSettings>()!);
+builder.Services.AddAuthorization();
+
+// Banco de dados
 var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 if(string.IsNullOrEmpty(ConnectionString))
@@ -30,7 +61,6 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -50,8 +80,10 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
-
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

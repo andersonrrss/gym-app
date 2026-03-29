@@ -4,16 +4,16 @@ public class User
 {
     public User () { }
 
-    public User (string username, string email, string passwordHash)
+    public User (string name, string email, string passwordHash)
     {
-        UserName = username;
+        Name = name;
         Email = email;
         PasswordHash = passwordHash;
     }
 
     public Guid Id { get; private set; } = Guid.NewGuid();
 
-    public string UserName { get; private set; } = null!;
+    public string Name { get; private set; } = null!;
 
     public string Email { get; private set; } = null!;
 

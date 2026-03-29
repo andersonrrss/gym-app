@@ -12,4 +12,12 @@
     <Folder Include="Interfaces" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\GymApp.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.5" />
+  </ItemGroup>
+
 </Project>

@@ -37,6 +37,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<Exercise>().HasData(exercises);
 
+        // Index
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<Exercise>()
+            .HasIndex(e => e.Name)
+            .IsUnique();
+
+        // Relacionamentos
         modelBuilder.Entity<Routine>()
             .HasOne(r => r.User)
             .WithMany(u => u.Routines)
