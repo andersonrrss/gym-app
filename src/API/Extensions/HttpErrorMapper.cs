@@ -9,7 +9,7 @@ public static class HttpErrorMapper
         this ControllerBase controller,
         ErrorType errorType,
         string? error,
-        Dictionary<string, string[]>? validationErrors
+        Dictionary<string, string[]>? validationErrors = null
     ) => errorType switch
     {
         ErrorType.Unauthorized => controller.Unauthorized(new { message = error }),

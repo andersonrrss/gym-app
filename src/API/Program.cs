@@ -1,28 +1,19 @@
-using Microsoft.OpenApi;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 using GymApp.API.Extensions;
 
 using GymApp.Application.Interfaces;
-using GymApp.Application.Services;
-
 using GymApp.Infrastructure.Data;
-using GymApp.Infrastructure.Repositories;
 using GymApp.Infrastructure.Services;
 using GymApp.Application.Settings;
-using Microsoft.Extensions.Options;
+using GymApp.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// Serviços
-builder.Services.AddSingleton<IHashPasswordService, HashPasswordService>();
-builder.Services.AddScoped<IAuthService, AuthService>(); 
-
-// Repositórios
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddServices();
+builder.Services.AddRepositories();
 
 // Jwt
 builder.Services.AddSingleton<IJwtService, JwtService>();
@@ -48,15 +39,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen(options =>
-    {
-        options.SwaggerDoc("v1", new OpenApiInfo
-        {
-            Version = "1.0",
-            Title = "Gym-app",
-            Description = "Um app que armazena e organiza fichas de treinos"
-        });
-    });
+    builder.Services.AddSwagger();
 }
 
 var app = builder.Build();

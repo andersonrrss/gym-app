@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using GymApp.Domain.Entities;
 using System.Reflection;
-using System.Text.Json.Serialization;
 using System.Text.Json;
 
 namespace GymApp.Infrastructure.Data;

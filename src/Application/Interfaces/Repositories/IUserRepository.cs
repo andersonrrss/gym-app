@@ -1,5 +1,4 @@
-﻿using GymApp.Domain.Common;
-using GymApp.Domain.Entities;
+﻿using GymApp.Domain.Entities;
 
 namespace GymApp.Application.Interfaces;
 

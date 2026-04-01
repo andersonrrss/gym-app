@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using GymApp.Application.DTOs;
+﻿using GymApp.Application.DTOs;
 using GymApp.Application.Interfaces;
 using GymApp.Domain.Common;
 using GymApp.Domain.Entities;

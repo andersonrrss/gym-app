@@ -7,7 +7,7 @@ namespace GymApp.Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    AppDbContext _context;
+    private readonly AppDbContext _context;
 
     public UserRepository(AppDbContext context)
     {

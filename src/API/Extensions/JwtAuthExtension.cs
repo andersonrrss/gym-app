@@ -18,6 +18,8 @@ public static class JwtAuthExtension
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
+            // Desativa o mapeamento automático do ASP.NET que renomeia os claims do JWT ao validar o token.
+            options.MapInboundClaims = false;
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.Secret)),

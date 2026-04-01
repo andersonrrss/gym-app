@@ -4,6 +4,7 @@ using GymApp.Application.Interfaces;
 using GymApp.Application.DTOs;
 
 using GymApp.API.Extensions;
+using System.Runtime.CompilerServices;
 
 namespace GymApp.Controllers
 {
@@ -24,10 +25,7 @@ namespace GymApp.Controllers
         {
             var result = await _authService.TryRegisterUserAsync(registerDTO);
 
-            if (!result.IsSucess)
-                return this.ToHttpError(result.ErrorType, result.Error, result.ValidationErrors);
-
-            return Ok(result.Value);
+            return result.ToActionResult(this);
         }
 
         // Login
@@ -36,10 +34,7 @@ namespace GymApp.Controllers
         {
             var result = await _authService.TryLoginUserAsync(loginDTO);
 
-            if (!result.IsSucess)
-                return this.ToHttpError(result.ErrorType, result.Error, result.ValidationErrors);
-
-            return Ok(result.Value);
+            return result.ToActionResult(this);
         }
     }
 }
