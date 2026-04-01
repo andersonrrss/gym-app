@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using GymApp.Application.Interfaces;
 using GymApp.Application.DTOs;
 
-using GymApp.API.Extensions;
-using System.Runtime.CompilerServices;
+using MyApp.Namespace;
 
 namespace GymApp.Controllers
 {
     [Route("api/auth")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
         private readonly IAuthService _authService;
 
@@ -25,7 +24,7 @@ namespace GymApp.Controllers
         {
             var result = await _authService.TryRegisterUserAsync(registerDTO);
 
-            return result.ToActionResult(this);
+            return Respond(result);
         }
 
         // Login
@@ -34,7 +33,7 @@ namespace GymApp.Controllers
         {
             var result = await _authService.TryLoginUserAsync(loginDTO);
 
-            return result.ToActionResult(this);
+            return Respond(result);
         }
     }
 }

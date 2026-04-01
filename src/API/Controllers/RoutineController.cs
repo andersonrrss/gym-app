@@ -8,7 +8,7 @@ namespace MyApp.Namespace
     [Route("api/routine")]
     [ApiController]
     [Authorize]
-    public class RoutineController : ControllerBase
+    public class RoutineController : BaseController
     {
         private readonly IRoutineService _routineService;
 
@@ -22,7 +22,7 @@ namespace MyApp.Namespace
         {
             var userId = User.GetUserId();
             var result = await _routineService.GetRoutineAsync(id, userId);
-            return result.ToActionResult(this);
+            return Respond(result);
         }
 
         [HttpPost]
@@ -30,7 +30,7 @@ namespace MyApp.Namespace
         {
             var userId = User.GetUserId();
             var result = await _routineService.CreateRoutineAsync(routineDTO, userId);
-            return result.ToActionResult(this);
+            return Respond(result);
         }
     }
 }

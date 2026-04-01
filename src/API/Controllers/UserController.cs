@@ -9,7 +9,7 @@ namespace MyApp.Namespace
     [Route("api/user")]
     [ApiController]
     [Authorize]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private readonly IUserService _userService;
         private readonly IRoutineService _routineService;
@@ -25,7 +25,7 @@ namespace MyApp.Namespace
         {
             var requesterId = User.GetUserId();
             var result = await _userService.GetUserInformationAsync(id, requesterId);
-            return result.ToActionResult(this);
+            return Respond(result);
         }
 
         [HttpGet("{id}/routines")]
@@ -33,7 +33,7 @@ namespace MyApp.Namespace
         {
             var requesterId = User.GetUserId();
             var result = await _routineService.GetUserRoutinesAsync(id, requesterId);
-            return result.ToActionResult(this);
+            return Respond(result);
         }
     }
 }
