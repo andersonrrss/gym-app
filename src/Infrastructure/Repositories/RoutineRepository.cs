@@ -14,17 +14,19 @@ public class RoutineRepository : IRoutineRepository
         _context = context;
     }
 
-    public async Task<Routine?> GetRoutineByIdAsync(Guid routineId) =>
-        await _context.Routines.FirstOrDefaultAsync(r => r.Id == routineId);
-
-    public async Task<IEnumerable<Routine>> GetUserRoutinesAsync(Guid userId) =>
-        await _context.Routines
-            .Where(r => r.UserId == userId)
-            .ToListAsync();
-
     public async Task AddAsync(Routine routine)
     {
         await _context.Routines.AddAsync(routine);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<Routine?> GetRoutineByIdAsync(Guid routineId) =>
+        await _context.Routines
+            .Include(r => r.Workouts)
+            .FirstOrDefaultAsync(r => r.Id == routineId);
+
+    public async Task<IEnumerable<Routine>> GetUserRoutinesAsync(Guid userId) =>
+        await _context.Routines
+            .Where(r => r.UserId == userId)
+            .ToListAsync();
 }

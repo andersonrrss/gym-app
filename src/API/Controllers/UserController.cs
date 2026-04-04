@@ -20,11 +20,11 @@ namespace MyApp.Namespace
             _routineService = routineService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserInformation([FromRoute] Guid id)
+        [HttpGet]
+        public async Task<IActionResult> GetUserInformation()
         {
-            var requesterId = User.GetUserId();
-            var result = await _userService.GetUserInformationAsync(id, requesterId);
+            var userId = User.GetUserId();
+            var result = await _userService.GetUserInformationAsync(userId);
             return Respond(result);
         }
 

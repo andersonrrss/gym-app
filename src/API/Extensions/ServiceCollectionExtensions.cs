@@ -5,7 +5,7 @@ using GymApp.Infrastructure.Repositories;
 using GymApp.Infrastructure.Services;
 using Microsoft.OpenApi;
 
-namespace GymApp.API;
+namespace GymApp.API.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoutineRepository, RoutineRepository>();
+        services.AddScoped<IWorkoutRepository, WorkoutRepository>();
         return services;
     }
 
@@ -22,6 +23,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthService, AuthService>(); 
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IRoutineService, RoutineService>();
+        services.AddScoped<IWorkoutService, WorkoutService>();
         return services;
     }
 

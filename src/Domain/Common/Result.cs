@@ -28,4 +28,7 @@ public class Result
 
     public static Result InternalError(string message = "Erro interno") =>
         new(false, message, ErrorType.InternalError);
+
+    public static Result Conflict(string message = "Dados conflitantes") =>
+        new(false, message, ErrorType.Conflict);
 }

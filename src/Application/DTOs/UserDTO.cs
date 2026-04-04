@@ -4,9 +4,9 @@ namespace GymApp.Application;
 
 public record class UserDTO
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; } = null!;
-    public string Email { get; set; } = null!;
+    public Guid Id { get; init; }
+    public string Name { get; init; } = null!;
+    public string Email { get; init; } = null!;
 
     public static UserDTO FromEntity(User user) => new()
     {

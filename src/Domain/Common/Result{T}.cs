@@ -39,4 +39,7 @@ public class Result<T>
 
     public static Result<T> InternalError(string message = "Erro interno") =>
         new(false, default, message, null, ErrorType.InternalError);
+
+    public static Result<T> Conflict(string message = "Dados conflitantes") =>
+        new(false, default, message, null, ErrorType.Conflict);
 }

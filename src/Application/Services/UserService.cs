@@ -12,11 +12,8 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<Result<UserDTO>> GetUserInformationAsync(Guid userId, Guid requesterID)
+    public async Task<Result<UserDTO>> GetUserInformationAsync(Guid userId)
     {
-        if(userId != requesterID)
-            return Result<UserDTO>.Forbidden("Você não pode acessar esse perfil");
-
         var user = await _userRepository.GetUserByIdAsync(userId);
 
         if(user is null)
