@@ -6,6 +6,7 @@ using GymApp.Application.Interfaces;
 using GymApp.Infrastructure.Data;
 using GymApp.Infrastructure.Services;
 using GymApp.Application.Settings;
+using GymApp.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,7 +62,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
 }
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

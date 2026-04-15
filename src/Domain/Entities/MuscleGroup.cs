@@ -12,15 +12,13 @@ public class MuscleGroup
     }
 
     [JsonConstructor]
-    public MuscleGroup(Guid id, string name)
+    public MuscleGroup(int id, string name)
     {
         Id = id;
         Name = name;
     }
 
-    public Guid Id { get; init; } = Guid.NewGuid();
+    public int Id { get; init; }
 
     public string Name { get; private set; } = null!;
-
-    public ICollection<Exercise> Exercises { get; private set; } = [];
 }

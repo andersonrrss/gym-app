@@ -1,13 +1,18 @@
+using GymApp.Domain.Enums;
 using GymApp.Domain.Common;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyApp.Namespace
+namespace GymApp.API.Controllers
 {
     public class BaseController : ControllerBase
     {
-        protected IActionResult Respond<T>(Result<T> result) =>
-            result.IsSucess ? Ok(result.Value) : MapError(result.ErrorType, result.Error, result.ValidationErrors);
+        protected IActionResult Respond<T>(Result<T> result, bool created = false)
+        {
+            if (!result.IsSucess)
+                return MapError(result.ErrorType, result.Error, result.ValidationErrors);
+
+            return created ? Created(string.Empty, result.Value) : Ok(result.Value);
+        }
 
         protected IActionResult Respond(Result result) => 
             result.IsSucess ? Ok() : MapError(result.ErrorType, result.Error);

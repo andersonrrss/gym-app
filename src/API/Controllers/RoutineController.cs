@@ -1,9 +1,10 @@
 using GymApp.API.Extensions;
-using GymApp.Application;
+using GymApp.Application.DTOs;
+using GymApp.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyApp.Namespace
+namespace GymApp.API.Controllers
 {
     [Route("api/routine")]
     [ApiController]
@@ -18,7 +19,7 @@ namespace MyApp.Namespace
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRoutineInformation([FromRoute] Guid id)
+        public async Task<IActionResult> GetRoutine([FromRoute] Guid id)
         {
             var userId = User.GetUserId();
             var result = await _routineService.GetRoutineAsync(id, userId);
@@ -26,11 +27,11 @@ namespace MyApp.Namespace
         }
 
         [HttpPost]
-        public async Task<IActionResult> NewRoutine([FromBody] RoutineRequestDTO routineDTO)
+        public async Task<IActionResult> CreateRoutine([FromBody] RoutineRequestDTO routineDTO)
         {
             var userId = User.GetUserId();
             var result = await _routineService.CreateRoutineAsync(routineDTO, userId);
-            return Respond(result);
+            return Respond(result, true);
         }
     }
 }

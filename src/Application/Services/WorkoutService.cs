@@ -9,33 +9,37 @@ public class WorkoutService : IWorkoutService
 {
     private readonly IWorkoutRepository _workoutRepository;
     private readonly IRoutineRepository _routineRepository;
+    private readonly IWorkoutExerciseRepository _workoutExerciseRepository;
 
-    public WorkoutService(IWorkoutRepository workoutRepository, IRoutineRepository routineRepository)
+    public WorkoutService(IWorkoutRepository workoutRepository, IRoutineRepository routineRepository, IWorkoutExerciseRepository workoutExerciseRepository)
     {
         _workoutRepository = workoutRepository;
         _routineRepository = routineRepository;
+        _workoutExerciseRepository = workoutExerciseRepository;
     }
 
-    public async Task<Result<WorkoutResponseDTO>> GetWorkoutAsync(Guid workoutId, Guid requesterId)
+    public async Task<Result<WorkoutWithExercisesDTO>> GetWorkoutAsync(Guid workoutId, Guid requesterId)
     {
         var workout = await _workoutRepository.GetWorkoutByIdAsync(workoutId, true);
 
         if(workout is null)
-            return Result<WorkoutResponseDTO>
+            return Result<WorkoutWithExercisesDTO>
                 .NotFound("Treino não encontrado");
 
         var queryUserId = workout.Routine.UserId;
         if(queryUserId != requesterId)
-            return Result<WorkoutResponseDTO>
+            return Result<WorkoutWithExercisesDTO>
                 .Forbidden("Você não pode acessar treinos de outros usuários");
 
-        return Result<WorkoutResponseDTO>
-            .Success(WorkoutResponseDTO.FromEntity(workout));
+        var exercises = await _workoutExerciseRepository.GetWorkoutExercisesAsync(workoutId);
+
+        return Result<WorkoutWithExercisesDTO>
+            .Success(WorkoutWithExercisesDTO.FromEntity(workout, exercises));
     }
 
-    public async Task<Result<WorkoutResponseDTO>> CreateWorkoutAsync(WorkoutRequestDTO workoutDto, Guid requesterId)
+    public async Task<Result<WorkoutResponseDTO>> CreateWorkoutAsync(WorkoutRequestDTO requestDTO, Guid requesterId)
     {
-        var routine = await _routineRepository.GetRoutineByIdAsync(workoutDto.RoutineId);
+        var routine = await _routineRepository.GetRoutineByIdAsync(requestDTO.RoutineId);
 
         if(routine is null)
             return Result<WorkoutResponseDTO>.NotFound("Ficha de treino inexistente");
@@ -43,11 +47,11 @@ public class WorkoutService : IWorkoutService
         if(routine.UserId != requesterId)
             return Result<WorkoutResponseDTO>.Forbidden("Você não pode editar esta ficha");
 
-        var exists = await _workoutRepository.ExistsByNameAsync(workoutDto.RoutineId, workoutDto.Name);
+        var exists = await _workoutRepository.ExistsByNameAsync(requestDTO.RoutineId, requestDTO.Name);
         if(exists)
             return Result<WorkoutResponseDTO>.Conflict("Nome de treino já existente");
         
-        var workout = new Workout(workoutDto.Name.Trim(), workoutDto.RoutineId);
+        var workout = new Workout(requestDTO.Name.Trim(), requestDTO.RoutineId);
         await _workoutRepository.AddAsync(workout);
 
         return Result<WorkoutResponseDTO>

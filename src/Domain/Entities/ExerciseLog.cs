@@ -5,7 +5,7 @@ public class ExerciseLog
     public ExerciseLog() {}
 
     public ExerciseLog(
-        Guid exerciseId,
+        int exerciseId,
         Guid workoutLogId,
         int setsCompleted,
         int repsCompleted,
@@ -21,7 +21,7 @@ public class ExerciseLog
 
     public Guid Id { get; private set; } = Guid.NewGuid();
 
-    public Guid ExerciseId { get; private set; }
+    public int ExerciseId { get; private set; }
     public Exercise Exercise { get; private set; } = null!; // Deve referenciar Exercise
 
     public Guid WorkoutLogId { get; private set; }

@@ -1,5 +1,6 @@
 ﻿using GymApp.Application.Interfaces;
 using GymApp.Domain.Common;
+using GymApp.Application.DTOs;
 
 namespace GymApp.Application.Services;
 

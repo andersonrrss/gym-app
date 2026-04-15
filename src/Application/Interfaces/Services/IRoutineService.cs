@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using GymApp.Domain.Common;
-namespace GymApp.Application;
+using GymApp.Application.DTOs;
+
+namespace GymApp.Application.Interfaces;
 
 public interface IRoutineService
 {
-    Task<Result<IEnumerable<RoutineResponseDTO>>> GetUserRoutinesAsync(Guid userId, Guid requesterId);
+    Task<Result<IEnumerable<RoutineResponseDTO>>> GetUserRoutinesAsync(Guid userId);
 
     Task<Result<RoutineResponseDTO>> GetRoutineAsync(Guid routineId, Guid requesterId);
 

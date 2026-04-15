@@ -1,4 +1,4 @@
-﻿
+﻿using GymApp.Domain.Enums;
 
 namespace GymApp.Domain.Common;
 
@@ -27,6 +27,14 @@ public class Result<T>
 
     public static Result<T> ValidationFailure(ValidationErrors errors) => 
         new (false, default, null, errors, ErrorType.Validation);
+
+    public static Result<T> ValidationFailure(string errorField, string errorMessage) {
+        var validationError = new ValidationErrors
+        {
+            [errorField] =  [errorMessage]
+        };
+        return new (false, default, null, validationError, ErrorType.Validation);
+    }
 
     public static Result<T> Unauthorized(string message = "Não autorizado") =>
         new(false, default, message, null, ErrorType.Unauthorized);

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GymApp.Application;
+namespace GymApp.Application.DTOs;
 
 public record class RoutineRequestDTO
 {

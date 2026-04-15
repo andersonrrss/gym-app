@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GymApp.Application.Interfaces;
 using GymApp.Application.DTOs;
 
-using MyApp.Namespace;
-
-namespace GymApp.Controllers
+namespace GymApp.API.Controllers
 {
     [Route("api/auth")]
     [ApiController]

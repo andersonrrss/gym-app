@@ -1,4 +1,6 @@
-﻿namespace GymApp.Domain.Common;
+﻿using GymApp.Domain.Enums;
+
+namespace GymApp.Domain.Common;
 
 public class Result
 {

@@ -24,6 +24,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         var muscleGroups = LoadSeedData<MuscleGroup>(
             "GymApp.Infrastructure.Data.SeedData.MuscleGroups.json"
         );
@@ -35,62 +37,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         );
 
         modelBuilder.Entity<Exercise>().HasData(exercises);
-
-        // Index
-        modelBuilder.Entity<User>()
-            .HasIndex(u => u.Email)
-            .IsUnique();
-
-        modelBuilder.Entity<Exercise>()
-            .HasIndex(e => e.Name)
-            .IsUnique();
-
-        // Relacionamentos
-        modelBuilder.Entity<Routine>()
-            .HasOne(r => r.User)
-            .WithMany(u => u.Routines)
-            .HasForeignKey(r => r.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
-        modelBuilder.Entity<Workout>()
-            .HasOne(w => w.Routine)
-            .WithMany(r => r.Workouts)
-            .HasForeignKey(w => w.RoutineId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<WorkoutExercise>()
-            .HasOne(we => we.Workout)
-            .WithMany(w => w.Exercises)
-            .HasForeignKey(we => we.WorkoutId)
-            .OnDelete(DeleteBehavior.Cascade);
-        modelBuilder.Entity<WorkoutExercise>()
-            .HasOne(we => we.Exercise)
-            .WithMany()
-            .HasForeignKey(we => we.ExerciseId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<Exercise>()
-            .HasOne(e => e.MuscleGroup)
-            .WithMany(mg => mg.Exercises)
-            .HasForeignKey(e => e.MuscleGroupId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        modelBuilder.Entity<WorkoutLog>()
-            .HasOne(wl => wl.Workout)
-            .WithMany()
-            .HasForeignKey(wl => wl.WorkoutId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        modelBuilder.Entity<ExerciseLog>()
-            .HasOne(wel => wel.WorkoutLog)
-            .WithMany(wl => wl.ExercisesLogs)
-            .HasForeignKey(wel => wel.WorkoutLogId)
-            .OnDelete(DeleteBehavior.Restrict);
-        modelBuilder.Entity<ExerciseLog>()
-            .HasOne(wel => wel.Exercise)
-            .WithMany()
-            .HasForeignKey(wel => wel.ExerciseId)
-            .OnDelete(DeleteBehavior.Restrict);
     }
 
     private List<T> LoadSeedData<T>(string resourceName)                                     

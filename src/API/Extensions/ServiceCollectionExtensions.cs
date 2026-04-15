@@ -14,6 +14,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoutineRepository, RoutineRepository>();
         services.AddScoped<IWorkoutRepository, WorkoutRepository>();
+        services.AddScoped<IExerciseRepository, ExerciseRepository>();
+        services.AddScoped<IWorkoutExerciseRepository, WorkoutExerciseRepository>();
         return services;
     }
 
@@ -24,6 +26,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IRoutineService, RoutineService>();
         services.AddScoped<IWorkoutService, WorkoutService>();
+        services.AddScoped<IExerciseService, ExerciseService>();
+        services.AddScoped<IWorkoutExerciseService, WorkoutExerciseService>();
         return services;
     }
 

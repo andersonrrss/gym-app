@@ -1,4 +1,4 @@
-﻿namespace GymApp.Domain.Common;
+﻿namespace GymApp.Domain.Enums;
 
 public enum ErrorType
 {

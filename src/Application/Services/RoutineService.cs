@@ -1,8 +1,9 @@
 ﻿using GymApp.Application.Interfaces;
 using GymApp.Domain.Common;
 using GymApp.Domain.Entities;
+using GymApp.Application.DTOs;
 
-namespace GymApp.Application;
+namespace GymApp.Application.Services;
 
 public class RoutineService : IRoutineService
 {
@@ -13,19 +14,12 @@ public class RoutineService : IRoutineService
         _routineRepository = routineRepository;
     }
 
-    public async Task<Result<IEnumerable<RoutineResponseDTO>>> GetUserRoutinesAsync(Guid userId, Guid requesterId)
+    public async Task<Result<IEnumerable<RoutineResponseDTO>>> GetUserRoutinesAsync(Guid userId)
     {
-        if(userId != requesterId)
-            return Result<IEnumerable<RoutineResponseDTO>>
-                .Forbidden("Você não pode acessar as fichas de treino de outro usuário");
-
         var routines = await _routineRepository.GetUserRoutinesAsync(userId);
-
-        if(!routines.Any())
-            return Result<IEnumerable<RoutineResponseDTO>>.NotFound("Usuário não contém fichas de treino");
             
         return Result<IEnumerable<RoutineResponseDTO>>
-            .Success(routines.Select(r => RoutineResponseDTO.FromEntity(r)));
+            .Success(routines.Select(RoutineResponseDTO.FromEntity));
     }
 
     public async Task<Result<RoutineResponseDTO>> GetRoutineAsync(Guid routineId, Guid requesterId)
